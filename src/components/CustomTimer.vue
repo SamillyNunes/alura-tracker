@@ -4,14 +4,14 @@
   >
     <TimerDisplay :time-in-seconds="timeInSeconds" />
 
-    <button class="button" @click="startTimer">
+    <button class="button" @click="startTimer" :disabled="timerRunning">
       <span class="icon">
         <i class="fas fa-play"></i>
       </span>
       <span>play</span>
     </button>
 
-    <button class="button" @click="stopTimer">
+    <button class="button" @click="stopTimer" :disabled="!timerRunning">
       <span class="icon">
         <i class="fas fa-stop"></i>
       </span>
@@ -31,15 +31,19 @@ export default defineComponent({
     return {
       timeInSeconds: 0,
       timer: 0,
+      timerRunning: false,
     };
   },
   methods: {
     startTimer() {
+      this.timerRunning = true;
+
       this.timer = setInterval(() => {
         this.timeInSeconds += 1;
       }, 1000);
     },
     stopTimer() {
+      this.timerRunning = false;
       clearInterval(this.timer);
     },
   },
