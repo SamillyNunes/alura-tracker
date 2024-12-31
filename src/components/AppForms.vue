@@ -42,6 +42,7 @@ export default defineComponent({
   data (){
     return {
       timeInSeconds: 0,
+      timer: 0,
     }
   },
   computed: {
@@ -55,12 +56,12 @@ export default defineComponent({
   },
   methods: {
     startTimer(){
-      setInterval(() => {
+      this.timer = setInterval(() => {
         this.timeInSeconds+=1;
       }, 1000);
     },
     stopTimer(){
-      console.log('Finalizando...');
+      clearInterval(this.timer);
     }
   },
 });
