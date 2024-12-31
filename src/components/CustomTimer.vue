@@ -1,0 +1,47 @@
+<template>
+  <div
+    class="column is-flex is-align-items-center is-justify-content-space-between"
+  >
+    <TimerDisplay :time-in-seconds="timeInSeconds" />
+
+    <button class="button" @click="startTimer">
+      <span class="icon">
+        <i class="fas fa-play"></i>
+      </span>
+      <span>play</span>
+    </button>
+
+    <button class="button" @click="stopTimer">
+      <span class="icon">
+        <i class="fas fa-stop"></i>
+      </span>
+      <span>stop</span>
+    </button>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+import TimerDisplay from "./TimerDisplay.vue";
+
+export default defineComponent({
+  name: "CustomTimer",
+  components: { TimerDisplay },
+  data() {
+    return {
+      timeInSeconds: 0,
+      timer: 0,
+    };
+  },
+  methods: {
+    startTimer() {
+      this.timer = setInterval(() => {
+        this.timeInSeconds += 1;
+      }, 1000);
+    },
+    stopTimer() {
+      clearInterval(this.timer);
+    },
+  },
+});
+</script>
