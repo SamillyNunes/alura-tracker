@@ -12,9 +12,7 @@
       <div
         class="column is-flex is-align-items-center is-justify-content-space-between"
       >
-        <section>
-          <strong>{{ timeFormated }}</strong>
-        </section>
+        <CustomTimer :time-in-seconds="timeInSeconds" />
 
         <button class="button" @click="startTimer">
           <span class="icon">
@@ -36,22 +34,15 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import CustomTimer from "./CustomTimer.vue";
 
 export default defineComponent({
   name: "AppForms",
+  components: { CustomTimer },
   data (){
     return {
       timeInSeconds: 0,
       timer: 0,
-    }
-  },
-  computed: {
-    timeFormated(): string {
-      // Primeiro vai passar os segundos convertido para milissegundos, para que o Date absorva a informacao de tempo
-      // Depois vai passar para o formato: 2024-12-08T15:45:00 , e por isso pegamos em seguida a partir da posicao 11, ate o caractere 19
-      return new Date(
-        this.timeInSeconds*1000,
-      ).toISOString().substring(11,19);
     }
   },
   methods: {
