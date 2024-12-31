@@ -9,7 +9,7 @@ import { defineComponent } from 'vue';
 
 
 export default defineComponent({
-    name: 'CustomTimer',
+    name: 'TimerDisplay',
     props: {
         timeInSeconds: {
             type: Number,

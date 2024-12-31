@@ -12,7 +12,7 @@
       <div
         class="column is-flex is-align-items-center is-justify-content-space-between"
       >
-        <CustomTimer :time-in-seconds="timeInSeconds" />
+        <TimerDisplay :time-in-seconds="timeInSeconds" />
 
         <button class="button" @click="startTimer">
           <span class="icon">
@@ -34,11 +34,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import CustomTimer from "./CustomTimer.vue";
+import TimerDisplay from "./TimerDisplay.vue";
 
 export default defineComponent({
   name: "AppForms",
-  components: { CustomTimer },
+  components: { TimerDisplay },
   data (){
     return {
       timeInSeconds: 0,
