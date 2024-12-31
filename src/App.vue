@@ -5,6 +5,10 @@
       <SideBar />
     </div>
 
+    <div class="column is-three-quarter">
+      <AppForms />
+    </div>
+
     
 
   </main>
@@ -14,10 +18,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import SideBar from "./components/SideBar.vue";
+import AppForms from "./components/AppForms.vue";
 
 export default defineComponent({
   name: "App",
-  components: { SideBar }
+  components: { SideBar, AppForms }
 });
 </script>
 
