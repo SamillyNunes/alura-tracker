@@ -4,30 +4,31 @@
   >
     <TimerDisplay :time-in-seconds="timeInSeconds" />
 
-    <button class="button" @click="startTimer" :disabled="timerRunning">
-      <span class="icon">
-        <i class="fas fa-play"></i>
-      </span>
-      <span>play</span>
-    </button>
+    <AppButton
+      label="play"
+      fa-icon="fa-play"
+      :is-disabled="timerRunning"
+      @on-click="startTimer"
+    />
 
-    <button class="button" @click="stopTimer" :disabled="!timerRunning">
-      <span class="icon">
-        <i class="fas fa-stop"></i>
-      </span>
-      <span>stop</span>
-    </button>
+    <AppButton
+      label="stop"
+      fa-icon="fa-stop"
+      :is-disabled="!timerRunning"
+      @on-click="stopTimer"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import TimerDisplay from "./TimerDisplay.vue";
+import AppButton from "./AppButton.vue";
 
 export default defineComponent({
   name: "CustomTimer",
-  emits: ['onStopTimer'],
-  components: { TimerDisplay },
+  emits: ["onStopTimer"],
+  components: { TimerDisplay, AppButton },
   data() {
     return {
       timeInSeconds: 0,
@@ -46,7 +47,7 @@ export default defineComponent({
     stopTimer() {
       this.timerRunning = false;
       clearInterval(this.timer);
-      this.$emit('onStopTimer', this.timeInSeconds);
+      this.$emit("onStopTimer", this.timeInSeconds);
       this.timeInSeconds = 0;
     },
   },
