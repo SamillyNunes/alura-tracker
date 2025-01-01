@@ -26,6 +26,7 @@ import TimerDisplay from "./TimerDisplay.vue";
 
 export default defineComponent({
   name: "CustomTimer",
+  emits: ['onStopTimer'],
   components: { TimerDisplay },
   data() {
     return {
@@ -45,6 +46,8 @@ export default defineComponent({
     stopTimer() {
       this.timerRunning = false;
       clearInterval(this.timer);
+      this.$emit('onStopTimer', this.timeInSeconds);
+      this.timeInSeconds = 0;
     },
   },
 });
