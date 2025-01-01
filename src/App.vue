@@ -7,6 +7,13 @@
 
     <div class="column is-three-quarter">
       <AppForms />
+
+      <div class="lista">
+        <CustomTask />
+        <CustomTask />
+        <CustomTask />
+      </div>
+
     </div>
 
     
@@ -19,13 +26,18 @@
 import { defineComponent } from "vue";
 import SideBar from "./components/SideBar.vue";
 import AppForms from "./components/AppForms.vue";
+import CustomTask from "./components/CustomTask.vue";
 
 export default defineComponent({
   name: "App",
-  components: { SideBar, AppForms }
+  components: { SideBar, AppForms, CustomTask }
 });
 </script>
 
-<style>
+<style scoped>
+
+.lista{
+  padding: 1.25rem;
+}
 
 </style>
