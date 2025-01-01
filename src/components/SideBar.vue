@@ -53,5 +53,8 @@ header {
     padding: 2.5rem;
     height: auto;
   }
+  .button {
+    position: relative;
+  }
 }
 </style>
