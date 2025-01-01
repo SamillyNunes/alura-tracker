@@ -26,6 +26,7 @@ import CustomTimer from "./CustomTimer.vue";
 export default defineComponent({
   name: "AppForms",
   components: { CustomTimer },
+  emits: [ 'onSaveTask' ],
   data() {
     return {
       description: '',
@@ -33,7 +34,11 @@ export default defineComponent({
   },
   methods: {
     endTask(elapsedTime: number) : void{
-      alert('Finalizado!');
+      this.$emit('onSaveTask', {
+        durationInSeconds: elapsedTime,
+        description: this.description,
+      });
+
       this.description='';
 
     }
