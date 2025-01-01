@@ -13,7 +13,12 @@
           :key="task.description"
           :task="task"
         />
+
+        <AppBox v-if="tasks.length===0" >
+          Você não está muito produtivo hoje :(
+        </AppBox>
       </div>
+
     </div>
   </main>
 </template>
@@ -24,10 +29,11 @@ import SideBar from "./components/SideBar.vue";
 import AppForms from "./components/AppForms.vue";
 import CustomTask from "./components/CustomTask.vue";
 import ITask from "./interfaces/ITask";
+import AppBox from "./components/AppBox.vue";
 
 export default defineComponent({
   name: "App",
-  components: { SideBar, AppForms, CustomTask },
+  components: { SideBar, AppForms, CustomTask, AppBox },
   data() {
     return {
       tasks: [] as ITask[],
