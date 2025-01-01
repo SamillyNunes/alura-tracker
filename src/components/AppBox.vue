@@ -13,3 +13,12 @@ export default defineComponent({
   name: "AppBox",
 });
 </script>
+
+<style lang="css" scoped>
+
+.box{
+    background-color: #b1b1b1;
+    color: var(--text-primary);
+}
+
+</style>

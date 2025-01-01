@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box forms">
     <div class="columns">
       <div
         class="column is-8"
@@ -8,7 +8,7 @@
       >
         <input 
           type="text" 
-          class="input" 
+          class="input description" 
           placeholder="Qual tarefa você deseja iniciar?"  
           v-model="description"
         />
@@ -45,3 +45,22 @@ export default defineComponent({
   }
 });
 </script>
+
+<style lang="css">
+
+.forms{
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+}
+
+.input{
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  
+}
+
+.input::placeholder{
+  color: var(--text-primary);
+}
+
+</style>

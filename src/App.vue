@@ -1,10 +1,10 @@
 <template>
-  <main class="columns is-gapless is-multiline">
+  <main class="columns is-gapless is-multiline dark-mode">
     <div class="column is-one-quarter">
       <SideBar />
     </div>
 
-    <div class="column is-three-quarter">
+    <div class="column is-three-quarter content">
       <AppForms @on-save-task="saveTask" />
 
       <div class="lista">
@@ -47,8 +47,23 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style>
 .lista {
   padding: 1.25rem;
 }
+
+main {
+  --bg-primay: #fff;
+  --text-primary: #000;
+}
+
+main.dark-mode {
+  --bg-primay: #2b2d42;
+  --text-primary: #ddd;
+}
+
+.content{
+  background-color: var(--bg-primay);
+}
+
 </style>

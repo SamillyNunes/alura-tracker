@@ -1,6 +1,6 @@
 <template>
     <section>
-        <strong>{{ timeFormated }}</strong>
+        <strong class="display">{{ timeFormated }}</strong>
     </section>
 </template>
 
@@ -14,7 +14,7 @@ export default defineComponent({
         timeInSeconds: {
             type: Number,
             default: 0,
-        }
+        },
     },
     computed: {
         timeFormated(): string {
@@ -28,3 +28,11 @@ export default defineComponent({
 });
 
 </script>
+
+<style >
+
+.display{
+    color: var(--text-primary);
+}
+
+</style>
