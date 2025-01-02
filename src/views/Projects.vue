@@ -35,28 +35,31 @@
 </template>
 
 <script lang="ts">
-import IProject from "@/interfaces/IProject";
-import { defineComponent } from "vue";
+import { customUseStore } from "@/store";
+import { computed, defineComponent } from "vue";
 
 export default defineComponent({
   name: "ProjectsView",
   data() {
     return {
       projectName: "",
-      projects: [] as IProject[],
     };
   },
   methods: {
     save(): void {
-      const project: IProject = {
-        name: this.projectName,
-        id: new Date().toISOString(),
-      };
-
-      this.projects.push(project);
+      // esse commit vai chamar a mutacao, e os params em seguida sao o que a mutacao recebe
+      this.store.commit('ADD_PROJECT', this.projectName);
 
       this.projectName = "";
     },
+  },
+  setup() {
+    const store = customUseStore();
+
+    return {
+      store,
+      projects: computed(()=> store.state.projects)
+    };
   },
 });
 </script>
