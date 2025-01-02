@@ -26,8 +26,8 @@
       </thead>
       <tbody>
         <tr v-for="project in projects" :key="project.id">
-            <td>{{ project.id }}</td>
-            <td>{{ project.name }}</td>
+          <td>{{ project.id }}</td>
+          <td>{{ project.name }}</td>
         </tr>
       </tbody>
     </table>
@@ -74,7 +74,7 @@ section h1 {
   color: #000;
 }
 
-.table{
-    margin-top: 1rem;
+.table {
+  margin-top: 1rem;
 }
 </style>

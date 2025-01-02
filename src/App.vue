@@ -1,7 +1,7 @@
 <template>
-  <main 
-    class="columns is-gapless is-multiline "
-    :class="{'dark-mode': darkModeEnabled}"
+  <main
+    class="columns is-gapless is-multiline"
+    :class="{ 'dark-mode': darkModeEnabled }"
   >
     <div class="column is-one-quarter">
       <SideBar @on-changed-theme="changeTheme" />
@@ -9,9 +9,7 @@
 
     <div class="column is-three-quarter content">
       <!-- Aqui vai as views de acordo com a rota -->
-      <router-view>
-        
-      </router-view>
+      <router-view> </router-view>
     </div>
   </main>
 </template>
@@ -26,18 +24,17 @@ export default defineComponent({
   data() {
     return {
       darkModeEnabled: false,
-    }
+    };
   },
   methods: {
-    changeTheme(isDarkModeEnabled: boolean): void{
-      this.darkModeEnabled=isDarkModeEnabled;
-    }
-  }
+    changeTheme(isDarkModeEnabled: boolean): void {
+      this.darkModeEnabled = isDarkModeEnabled;
+    },
+  },
 });
 </script>
 
 <style>
-
 main {
   --bg-primay: #fff;
   --text-primary: #000;
@@ -48,8 +45,7 @@ main.dark-mode {
   --text-primary: #ddd;
 }
 
-.content{
+.content {
   background-color: var(--bg-primay);
 }
-
 </style>

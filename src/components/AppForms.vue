@@ -6,10 +6,10 @@
         role="form"
         aria-label="Formulário para criação de uma nova tarefa"
       >
-        <input 
-          type="text" 
-          class="input description" 
-          placeholder="Qual tarefa você deseja iniciar?"  
+        <input
+          type="text"
+          class="input description"
+          placeholder="Qual tarefa você deseja iniciar?"
           v-model="description"
         />
       </div>
@@ -26,41 +26,37 @@ import CustomTimer from "./CustomTimer.vue";
 export default defineComponent({
   name: "AppForms",
   components: { CustomTimer },
-  emits: [ 'onSaveTask' ],
+  emits: ["onSaveTask"],
   data() {
     return {
-      description: '',
-    }
+      description: "",
+    };
   },
   methods: {
-    endTask(elapsedTime: number) : void{
-      this.$emit('onSaveTask', {
+    endTask(elapsedTime: number): void {
+      this.$emit("onSaveTask", {
         durationInSeconds: elapsedTime,
         description: this.description,
       });
 
-      this.description='';
-
-    }
-  }
+      this.description = "";
+    },
+  },
 });
 </script>
 
 <style lang="css">
-
-.forms{
+.forms {
   color: var(--text-primary);
   background-color: var(--bg-primary);
 }
 
-.input{
+.input {
   color: var(--text-primary);
   background-color: var(--bg-primary);
-  
 }
 
-.input::placeholder{
+.input::placeholder {
   color: var(--text-primary);
 }
-
 </style>

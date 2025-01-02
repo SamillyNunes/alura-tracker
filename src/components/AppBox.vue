@@ -15,10 +15,8 @@ export default defineComponent({
 </script>
 
 <style lang="css" scoped>
-
-.box{
-    background-color: #b1b1b1;
-    color: var(--text-primary);
+.box {
+  background-color: #b1b1b1;
+  color: var(--text-primary);
 }
-
 </style>
