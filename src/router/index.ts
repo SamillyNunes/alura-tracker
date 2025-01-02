@@ -19,6 +19,11 @@ const routes: RouteRecordRaw[] = [
         name: 'New Project',
         component: ProjectForms,
     },
+    {
+        path: '/projects/:id',
+        name: 'Update Project',
+        component: ProjectForms,
+    },
 ];
 
 const router = createRouter({
