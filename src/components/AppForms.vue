@@ -2,7 +2,7 @@
   <div class="box forms">
     <div class="columns">
       <div
-        class="column is-8"
+        class="column is-5"
         role="form"
         aria-label="Formulário para criação de uma nova tarefa"
       >
@@ -14,14 +14,32 @@
         />
       </div>
 
+      <div class="column is-3">
+        <div class="select">
+          <select v-model="projectId">
+            <option value="">Selecione o projeto</option>
+            <option 
+              v-for="project in projects"
+              :value="project.id"
+              :key="project.id"
+            >
+              {{ project.name }}
+            </option>
+
+          </select>
+        </div>
+      </div>
+
       <CustomTimer @on-stop-timer="endTask" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 import CustomTimer from "./CustomTimer.vue";
+import { useStore } from "vuex";
+import { storeKey } from "@/store";
 
 export default defineComponent({
   name: "AppForms",
@@ -30,6 +48,7 @@ export default defineComponent({
   data() {
     return {
       description: "",
+      projectId: '',
     };
   },
   methods: {
@@ -37,11 +56,21 @@ export default defineComponent({
       this.$emit("onSaveTask", {
         durationInSeconds: elapsedTime,
         description: this.description,
+        project: this.projects.find(p=> p.id===this.projectId),
       });
 
       this.description = "";
     },
   },
+  setup(){
+    const store = useStore(storeKey);
+    // tudo que retornamos no setup fica disponivel para o componente
+    return {
+      // retornamos dentro do computed porque a lista eh dinamica,
+      // e pode receber alteracoes, logo ele ficara ouvindo
+      projects: computed(() => store.state.projects),
+    }
+  }
 });
 </script>
 
