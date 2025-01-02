@@ -1,6 +1,6 @@
 <template>
   <section class="projects">
-    <h1>Projetos</h1>
+    <h1>{{ id ? "Editar " : "Criar novo " }}projeto</h1>
 
     <form @submit.prevent="save">
       <div class="field">
@@ -13,7 +13,9 @@
         />
       </div>
       <div class="field">
-        <button class="button" type="submit">Salvar</button>
+        <button class="button" type="submit">
+          {{ id ? "Salvar edição" : "Salvar" }}
+        </button>
       </div>
     </form>
   </section>
@@ -37,7 +39,7 @@ export default defineComponent({
       // aqui podemos acessar a this.store porque ela foi exportada la no setup()
       const project = this.store.state.projects.find((p) => p.id === this.id);
 
-      this.projectName = project?.name || '';
+      this.projectName = project?.name || "";
     }
   },
   data() {
@@ -47,8 +49,15 @@ export default defineComponent({
   },
   methods: {
     save(): void {
-      // esse commit vai chamar a mutacao, e os params em seguida sao o que a mutacao recebe
-      this.store.commit("ADD_PROJECT", this.projectName);
+      if (this.id) {
+        this.store.commit("UPDATE_PROJECT", {
+          id: this.id,
+          name: this.projectName,
+        });
+      } else {
+        // esse commit vai chamar a mutacao, e os params em seguida sao o que a mutacao recebe
+        this.store.commit("ADD_PROJECT", this.projectName);
+      }
 
       this.projectName = "";
 
