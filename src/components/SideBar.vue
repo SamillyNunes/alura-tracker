@@ -4,6 +4,24 @@
       <img src="../assets/logo.png" alt="Logo da aplicação" />
     </h1>
 
+    <nav>
+      <ul>
+        <li>
+          <router-link to="/" class="link">
+            <i class="fas fa-tasks"></i>
+            Tarefas
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/projects"  class="link">
+            <i class="fas fa-project-diagram"></i>
+            Projetos
+          </router-link>
+        </li>
+      </ul>
+
+    </nav>
+
     <button class="button" @click="changeTheme">
       {{ darkModeEnabled ? "Desativar" : "Ativar" }} modo escuro
     </button>
@@ -46,6 +64,31 @@ header {
 .button {
   position: absolute;
   bottom: 1rem;
+}
+
+nav{
+  margin-top: 1.5rem;
+}
+
+nav li{
+  margin: 1.5rem 0;
+  padding: 0.5rem;
+}
+
+nav li i{
+  margin-right: 1rem;
+}
+
+.link{
+  color: #fff;
+}
+
+.link:hover{
+  color: #fde143;
+}
+
+.link.router-link-active{
+  color: #FAF0CA;
 }
 
 @media only screen and (max-width: 768px) {
