@@ -13,13 +13,12 @@
           </router-link>
         </li>
         <li>
-          <router-link to="/projects"  class="link">
+          <router-link to="/projects" class="link">
             <i class="fas fa-project-diagram"></i>
             Projetos
           </router-link>
         </li>
       </ul>
-
     </nav>
 
     <button class="button" @click="changeTheme">
@@ -66,29 +65,29 @@ header {
   bottom: 1rem;
 }
 
-nav{
+nav {
   margin-top: 1.5rem;
 }
 
-nav li{
+nav li {
   margin: 1.5rem 0;
   padding: 0.5rem;
 }
 
-nav li i{
+nav li i {
   margin-right: 1rem;
 }
 
-.link{
+.link {
   color: #fff;
 }
 
-.link:hover{
+.link:hover {
   color: #fde143;
 }
 
-.link.router-link-active{
-  color: #FAF0CA;
+.link.router-link-active {
+  color: #faf0ca;
 }
 
 @media only screen and (max-width: 768px) {

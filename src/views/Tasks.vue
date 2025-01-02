@@ -35,9 +35,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
 .lista {
   padding: 1.25rem;
 }
-
 </style>
