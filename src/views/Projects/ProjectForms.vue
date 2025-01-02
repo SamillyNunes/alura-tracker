@@ -23,6 +23,7 @@
 
 <script lang="ts">
 import { customUseStore } from "@/store";
+import { ADD_PROJECT, UPDATE_PROJECT } from "@/store/mutations_type";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -50,13 +51,13 @@ export default defineComponent({
   methods: {
     save(): void {
       if (this.id) {
-        this.store.commit("UPDATE_PROJECT", {
+        this.store.commit(UPDATE_PROJECT, {
           id: this.id,
           name: this.projectName,
         });
       } else {
         // esse commit vai chamar a mutacao, e os params em seguida sao o que a mutacao recebe
-        this.store.commit("ADD_PROJECT", this.projectName);
+        this.store.commit(ADD_PROJECT, this.projectName);
       }
 
       this.projectName = "";
