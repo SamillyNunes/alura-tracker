@@ -25,6 +25,21 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ProjectForms",
+  props: {
+    id: {
+      type: String,
+    },
+  },
+  // quando esse componente for montado...
+  mounted() {
+    // se existir essa prop id, entao...
+    if (this.id) {
+      // aqui podemos acessar a this.store porque ela foi exportada la no setup()
+      const project = this.store.state.projects.find((p) => p.id === this.id);
+
+      this.projectName = project?.name || '';
+    }
+  },
   data() {
     return {
       projectName: "",
@@ -33,11 +48,11 @@ export default defineComponent({
   methods: {
     save(): void {
       // esse commit vai chamar a mutacao, e os params em seguida sao o que a mutacao recebe
-      this.store.commit('ADD_PROJECT', this.projectName);
+      this.store.commit("ADD_PROJECT", this.projectName);
 
       this.projectName = "";
 
-      this.$router.push('/projects');
+      this.$router.push("/projects");
     },
   },
   setup() {
@@ -62,5 +77,4 @@ section h1 {
 .label {
   color: #000;
 }
-
 </style>

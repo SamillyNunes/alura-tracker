@@ -23,6 +23,9 @@ const routes: RouteRecordRaw[] = [
         path: '/projects/:id',
         name: 'Update Project',
         component: ProjectForms,
+        // esse props: true diz que esse :id definido no path
+        // vai ser injetado como uma propriedade do componente
+        props: true,
     },
 ];
 
