@@ -19,7 +19,7 @@ import ITask from "@/interfaces/ITask";
 import AppBox from "@/components/AppBox.vue";
 
 export default defineComponent({
-  name: "App",
+  name: "TasksView",
   components: { AppForms, CustomTask, AppBox },
   data() {
     return {
