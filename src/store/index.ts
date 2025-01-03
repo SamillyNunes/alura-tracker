@@ -9,7 +9,7 @@ import {
   UPDATE_PROJECT,
 } from "./mutations_type";
 import ITask from "@/interfaces/ITask";
-import { INotification, NotificationType } from "@/interfaces/INotification";
+import { INotification } from "@/interfaces/INotification";
 
 interface State {
   projects: IProject[];

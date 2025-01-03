@@ -1,4 +1,4 @@
-import { INotification, NotificationType } from "@/interfaces/INotification";
+import { NotificationType } from "@/interfaces/INotification";
 import { store } from "@/store";
 import { NOTIFY } from "@/store/mutations_type";
 
