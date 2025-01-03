@@ -17,6 +17,7 @@ import {
   GET_PROJECTS_ACTION,
   GET_TASKS_ACTION,
   SEND_PROJECT_ACTION,
+  SEND_TASK_ACTION,
   UPDATE_PROJECT_ACTION,
 } from "./actions_types";
 import clientHttp from "@/services/http";
@@ -100,6 +101,9 @@ export const store = createStore<State>({
       clientHttp
         .get("tasks")
         .then((response) => commit(SET_TASKS, response.data));
+    },
+    [SEND_TASK_ACTION]({commit}, task: ITask) {
+      return clientHttp.post("/tasks", task).then(response => commit(ADD_TASK, response.data));
     },
   },
 });

@@ -67,7 +67,6 @@ export default defineComponent({
     },
     endTask(elapsedTime: number): void {
       this.$emit("onSaveTask", {
-        id: new Date().toISOString(),
         durationInSeconds: elapsedTime,
         description: this.description,
         project: this.projects.find((p) => p.id === this.projectId),

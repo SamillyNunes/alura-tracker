@@ -18,7 +18,7 @@ import CustomTask from "@/components/CustomTask.vue";
 import ITask from "@/interfaces/ITask";
 import AppBox from "@/components/AppBox.vue";
 import { customUseStore } from "@/store";
-import { GET_TASKS_ACTION } from "@/store/actions_types";
+import { GET_PROJECTS_ACTION, GET_TASKS_ACTION, SEND_TASK_ACTION } from "@/store/actions_types";
 
 export default defineComponent({
   name: "TasksView",
@@ -35,7 +35,7 @@ export default defineComponent({
   },
   methods: {
     saveTask(task: ITask): void {
-      this.tasks.push(task);
+      this.store.dispatch(SEND_TASK_ACTION, task);
     },
   },
 });
