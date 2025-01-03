@@ -45,8 +45,7 @@
 
 <script lang="ts">
 import { customUseStore } from "@/store";
-import { GET_PROJECTS_ACTION } from "@/store/actions_types";
-import { DELETE_PROJECT } from "@/store/mutations_type";
+import { DELETE_PROJECT_ACTION, GET_PROJECTS_ACTION } from "@/store/actions_types";
 import { computed, defineComponent } from "vue";
 
 export default defineComponent({
@@ -62,7 +61,7 @@ export default defineComponent({
   },
   methods: {
     deleteProject(id: string): void {
-      this.store.commit(DELETE_PROJECT, id);
+      this.store.dispatch(DELETE_PROJECT_ACTION, id);
     },
   },
 });

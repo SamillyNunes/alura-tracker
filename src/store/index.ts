@@ -11,7 +11,12 @@ import {
 } from "./mutations_type";
 import ITask from "@/interfaces/ITask";
 import { INotification } from "@/interfaces/INotification";
-import { GET_PROJECTS_ACTION, SEND_PROJECT_ACTION, UPDATE_PROJECT_ACTION } from "./actions_types";
+import {
+  DELETE_PROJECT_ACTION,
+  GET_PROJECTS_ACTION,
+  SEND_PROJECT_ACTION,
+  UPDATE_PROJECT_ACTION,
+} from "./actions_types";
 import clientHttp from "@/services/http";
 
 interface State {
@@ -77,6 +82,10 @@ export const store = createStore<State>({
     },
     [UPDATE_PROJECT_ACTION](context, project: IProject) {
       return clientHttp.put(`/projects/${project.id}`, project);
+    },
+    async [DELETE_PROJECT_ACTION]({ commit }, projectId) {
+      await clientHttp.delete(`/projects/${projectId}`);
+      return commit(DELETE_PROJECT, projectId);
     },
   },
 });
