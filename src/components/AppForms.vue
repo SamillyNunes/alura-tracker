@@ -31,7 +31,7 @@
 
       <CustomTimer
         :can-start-timer="projectId !== ''"
-        @on-timer-cant-start="onProjectIdIsEmpty"
+        @on-timer-cant-start="notifyProjectIdIsEmpty"
         @on-stop-timer="endTask"
       />
     </div>
@@ -43,8 +43,8 @@ import { computed, defineComponent } from "vue";
 import CustomTimer from "./CustomTimer.vue";
 import { useStore } from "vuex";
 import { storeKey } from "@/store";
-import { NOTIFY } from "@/store/mutations_type";
-import { INotification, NotificationType } from "@/interfaces/INotification";
+import { NotificationType } from "@/interfaces/INotification";
+import { notifyMixin } from "@/mixins/notify";
 
 export default defineComponent({
   name: "AppForms",
@@ -56,13 +56,14 @@ export default defineComponent({
       projectId: "",
     };
   },
+  mixins: [notifyMixin],
   methods: {
-    onProjectIdIsEmpty(): void {
-      this.store.commit(NOTIFY, {
-        title: "Erro",
-        text: "Você não atribuiu um projeto a sua tarefa. Por favor atribua um projeto antes de iniciar a tarefa",
-        type: NotificationType.FAIL,
-      } as INotification);
+    notifyProjectIdIsEmpty(): void {
+      this.notify(
+        NotificationType.FAIL,
+        "Erro",
+        "Você não atribuiu um projeto a sua tarefa. Por favor atribua um projeto antes de iniciar a tarefa"
+      );
     },
     endTask(elapsedTime: number): void {
       this.$emit("onSaveTask", {
@@ -73,7 +74,7 @@ export default defineComponent({
       });
 
       this.description = "";
-      this.projectId="";
+      this.projectId = "";
     },
   },
   setup() {
@@ -83,7 +84,6 @@ export default defineComponent({
       // retornamos dentro do computed porque a lista eh dinamica,
       // e pode receber alteracoes, logo ele ficara ouvindo
       projects: computed(() => store.state.projects),
-      store,
     };
   },
 });

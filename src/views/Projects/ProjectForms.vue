@@ -22,9 +22,10 @@
 </template>
 
 <script lang="ts">
-import { INotification, NotificationType } from "@/interfaces/INotification";
+import { NotificationType } from "@/interfaces/INotification";
+import { notifyMixin } from "@/mixins/notify";
 import { customUseStore } from "@/store";
-import { ADD_PROJECT, NOTIFY, UPDATE_PROJECT } from "@/store/mutations_type";
+import { ADD_PROJECT, UPDATE_PROJECT } from "@/store/mutations_type";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -49,6 +50,7 @@ export default defineComponent({
       projectName: "",
     };
   },
+  mixins: [notifyMixin],
   methods: {
     save(): void {
       if (this.id) {
@@ -63,11 +65,11 @@ export default defineComponent({
 
       this.projectName = "";
 
-      this.store.commit(NOTIFY, {
-        title: 'Novo projeto foi salvo',
-        text: 'Prontinho =D seu projeto está disponível',
-        type: NotificationType.SUCCESS,
-      } as INotification);
+      this.notify(
+        NotificationType.SUCCESS,
+        "Novo projeto foi salvo",
+        "Prontinho =D seu projeto está disponível"
+      );
 
       this.$router.push("/projects");
     },
