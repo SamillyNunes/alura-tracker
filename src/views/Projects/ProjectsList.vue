@@ -45,7 +45,7 @@
 
 <script lang="ts">
 import { customUseStore } from "@/store";
-import { GET_PROJECTS } from "@/store/actions_types";
+import { GET_PROJECTS_ACTION } from "@/store/actions_types";
 import { DELETE_PROJECT } from "@/store/mutations_type";
 import { computed, defineComponent } from "vue";
 
@@ -53,7 +53,7 @@ export default defineComponent({
   name: "ProjectsList",
   setup() {
     const store = customUseStore();
-    store.dispatch(GET_PROJECTS);
+    store.dispatch(GET_PROJECTS_ACTION);
 
     return {
       projects: computed(() => store.state.projects),

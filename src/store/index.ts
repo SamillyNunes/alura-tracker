@@ -11,7 +11,7 @@ import {
 } from "./mutations_type";
 import ITask from "@/interfaces/ITask";
 import { INotification } from "@/interfaces/INotification";
-import { GET_PROJECTS } from "./actions_types";
+import { GET_PROJECTS_ACTION, SEND_PROJECT_ACTION, UPDATE_PROJECT_ACTION } from "./actions_types";
 import clientHttp from "@/services/http";
 
 interface State {
@@ -65,8 +65,18 @@ export const store = createStore<State>({
     },
   },
   actions: {
-    [GET_PROJECTS]({ commit }) {
-      clientHttp.get("projects").then((response) => commit(SET_PROJECTS,response.data));
+    [GET_PROJECTS_ACTION]({ commit }) {
+      clientHttp
+        .get("projects")
+        .then((response) => commit(SET_PROJECTS, response.data));
+    },
+    [SEND_PROJECT_ACTION](context, projectName: string) {
+      return clientHttp.post("/projects", {
+        name: projectName,
+      });
+    },
+    [UPDATE_PROJECT_ACTION](context, project: IProject) {
+      return clientHttp.put(`/projects/${project.id}`, project);
     },
   },
 });

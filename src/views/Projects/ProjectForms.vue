@@ -25,8 +25,11 @@
 import { defineComponent } from "vue";
 import { NotificationType } from "@/interfaces/INotification";
 import { customUseStore } from "@/store";
-import { ADD_PROJECT, UPDATE_PROJECT } from "@/store/mutations_type";
 import useNotifier from "@/hooks/notifier";
+import {
+  SEND_PROJECT_ACTION,
+  UPDATE_PROJECT_ACTION,
+} from "@/store/actions_types";
 
 export default defineComponent({
   name: "ProjectForms",
@@ -53,15 +56,20 @@ export default defineComponent({
   methods: {
     save(): void {
       if (this.id) {
-        this.store.commit(UPDATE_PROJECT, {
-          id: this.id,
-          name: this.projectName,
-        });
+        this.store
+          .dispatch(UPDATE_PROJECT_ACTION, {
+            id: this.id,
+            name: this.projectName,
+          })
+          .then(() => this.onSavingSuccess());
       } else {
         // esse commit vai chamar a mutacao, e os params em seguida sao o que a mutacao recebe
-        this.store.commit(ADD_PROJECT, this.projectName);
+        this.store
+          .dispatch(SEND_PROJECT_ACTION, this.projectName)
+          .then(() => this.onSavingSuccess());
       }
-
+    },
+    onSavingSuccess() {
       this.projectName = "";
 
       this.notify(
