@@ -1,6 +1,6 @@
 <template>
   <AppBox>
-    <div class="columns">
+    <div class="columns task" @click="onTaskClicked">
       <div class="column is-4">
         {{ task.description || "Tarefa sem descrição" }}
       </div>
@@ -25,11 +25,25 @@ import AppBox from "./AppBox.vue";
 export default defineComponent({
   name: "CustomTask",
   components: { TimerDisplay, AppBox },
+  emits: ['onTaskClicked'],
   props: {
     task: {
       type: Object as PropType<ITask>,
       required: true,
     },
   },
+  methods: {
+    onTaskClicked(): void{
+      this.$emit('onTaskClicked', this.task);
+    }
+  }
 });
 </script>
+
+<style lang="css" scoped>
+
+.task{
+  cursor: pointer;
+}
+
+</style>
