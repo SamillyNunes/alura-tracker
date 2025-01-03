@@ -4,6 +4,7 @@ import { createStore, Store, useStore } from "vuex";
 import {
   ADD_PROJECT,
   ADD_TASK,
+  CHANGE_TASK,
   DELETE_PROJECT,
   NOTIFY,
   SET_PROJECTS,
@@ -19,6 +20,7 @@ import {
   SEND_PROJECT_ACTION,
   SEND_TASK_ACTION,
   UPDATE_PROJECT_ACTION,
+  UPDATE_TASK_ACTION,
 } from "./actions_types";
 import clientHttp from "@/services/http";
 
@@ -64,6 +66,10 @@ export const store = createStore<State>({
     [SET_TASKS](state, tasks: ITask[]): void {
       state.tasks = tasks;
     },
+    [CHANGE_TASK](state, task: ITask): void {
+      const taskIndex = state.tasks.findIndex((t) => t.id === task.id);
+      state.tasks[taskIndex] = task;
+    },
 
     // NOTIFICATIONS
     [NOTIFY](state, newNotification: INotification): void {
@@ -102,8 +108,14 @@ export const store = createStore<State>({
         .get("tasks")
         .then((response) => commit(SET_TASKS, response.data));
     },
-    [SEND_TASK_ACTION]({commit}, task: ITask) {
-      return clientHttp.post("/tasks", task).then(response => commit(ADD_TASK, response.data));
+    async [SEND_TASK_ACTION]({ commit }, task: ITask) {
+      const response = await clientHttp.post("/tasks", task);
+      return commit(ADD_TASK, response.data);
+    },
+    async [UPDATE_TASK_ACTION]({ commit }, task: ITask) {
+      await clientHttp
+        .put(`/tasks/${task.id}`, task);
+      return commit(CHANGE_TASK, task);
     },
   },
 });

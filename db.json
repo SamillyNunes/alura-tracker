@@ -22,7 +22,7 @@
     {
       "id": "2025-01-03T19:55:43.024Z",
       "durationInSeconds": 4,
-      "description": "Estudar testes",
+      "description": "Estudar testes 2",
       "project": {
         "id": "1",
         "name": "Alura Tracker"
@@ -31,7 +31,7 @@
     {
       "id": "1a79",
       "durationInSeconds": 3,
-      "description": "Estudar estados globais",
+      "description": "Estudar padrões de projetos",
       "project": {
         "id": "1",
         "name": "Alura Tracker"

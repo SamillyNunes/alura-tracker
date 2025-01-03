@@ -13,7 +13,11 @@
       Você não está muito produtivo hoje :(
     </AppBox>
 
-    <div class="modal" :class="{ 'is-active': selectedTask }" v-if="selectedTask">
+    <div
+      class="modal"
+      :class="{ 'is-active': selectedTask }"
+      v-if="selectedTask"
+    >
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
@@ -40,7 +44,7 @@
         </section>
         <footer class="modal-card-foot">
           <div class="buttons">
-            <button class="button is-success" @click="closeModal">
+            <button class="button is-success" @click="updateTask">
               Salvar alterações
             </button>
             <button class="button" @click="closeModal">Cancelar</button>
@@ -63,6 +67,7 @@ import {
   GET_PROJECTS_ACTION,
   GET_TASKS_ACTION,
   SEND_TASK_ACTION,
+  UPDATE_TASK_ACTION,
 } from "@/store/actions_types";
 
 export default defineComponent({
@@ -92,6 +97,11 @@ export default defineComponent({
     },
     closeModal(): void {
       this.selectedTask = null;
+    },
+    updateTask(): void {
+      this.store
+        .dispatch(UPDATE_TASK_ACTION, this.selectedTask)
+        .then(() => this.closeModal());
     },
   },
 });

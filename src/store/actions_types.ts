@@ -6,3 +6,4 @@ export const DELETE_PROJECT_ACTION = 'DELETE_PROJECT';
 // acoes das tarefas
 export const GET_TASKS_ACTION = 'GET_TASKS';
 export const SEND_TASK_ACTION = 'SEND_TASK';
+export const UPDATE_TASK_ACTION = 'UPDATE_TASK';
