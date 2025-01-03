@@ -8,10 +8,12 @@ import {
   UPDATE_PROJECT,
 } from "./mutations_type";
 import ITask from "@/interfaces/ITask";
+import { INotification, NotificationType } from "@/interfaces/INotification";
 
 interface State {
   projects: IProject[];
   tasks: ITask[];
+  notifications: INotification[],
 }
 
 export const storeKey: InjectionKey<Store<State>> = Symbol();
@@ -20,6 +22,26 @@ export const store = createStore<State>({
   state: {
     projects: [],
     tasks: [],
+    notifications: [
+      {
+        id: 1,
+        title: 'Uma notificação de sucesso',
+        text: 'Você conseguiu, parabéns!',
+        type: NotificationType.SUCCESS,
+      },
+      {
+        id: 2,
+        title: 'Uma notificação de atenção',
+        text: 'Cuidado',
+        type: NotificationType.WARNING,
+      },
+      {
+        id: 3,
+        title: 'Uma notificação de perigo',
+        text: 'Você falhou',
+        type: NotificationType.FAIL,
+      }
+    ],
   },
   // o convencional eh que o nome da mutacao seja em caixa alta
   mutations: {
