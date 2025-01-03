@@ -6,6 +6,7 @@ export const SET_PROJECTS = 'SET_PROJECTS';
 
 // mutacoes para as tarefas
 export const ADD_TASK = 'ADD_TASK';
+export const SET_TASKS = 'SET_TASKS';
 
 // mutacoes para notificacoes
 export const NOTIFY = 'NOTIFY';

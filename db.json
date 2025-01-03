@@ -8,5 +8,16 @@
       "id": "5159",
       "name": "CSS"
     }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "durationInSeconds": 60,
+      "description": "Plano de Estudos - Vue.js",
+      "project": {
+        "id": "5159",
+        "name": "CSS"
+      }
+    }
   ]
 }

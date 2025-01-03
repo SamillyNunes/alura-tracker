@@ -18,12 +18,14 @@ import CustomTask from "@/components/CustomTask.vue";
 import ITask from "@/interfaces/ITask";
 import AppBox from "@/components/AppBox.vue";
 import { customUseStore } from "@/store";
+import { GET_TASKS_ACTION } from "@/store/actions_types";
 
 export default defineComponent({
   name: "TasksView",
   components: { AppForms, CustomTask, AppBox },
   setup() {
     const store = customUseStore();
+    store.dispatch(GET_TASKS_ACTION);
 
     return {
       store,

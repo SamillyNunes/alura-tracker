@@ -7,6 +7,7 @@ import {
   DELETE_PROJECT,
   NOTIFY,
   SET_PROJECTS,
+  SET_TASKS,
   UPDATE_PROJECT,
 } from "./mutations_type";
 import ITask from "@/interfaces/ITask";
@@ -14,6 +15,7 @@ import { INotification } from "@/interfaces/INotification";
 import {
   DELETE_PROJECT_ACTION,
   GET_PROJECTS_ACTION,
+  GET_TASKS_ACTION,
   SEND_PROJECT_ACTION,
   UPDATE_PROJECT_ACTION,
 } from "./actions_types";
@@ -54,10 +56,15 @@ export const store = createStore<State>({
       state.projects = projects;
     },
 
+    // TASKS
     [ADD_TASK](state, task: ITask) {
       state.tasks.push(task);
     },
+    [SET_TASKS](state, tasks: ITask[]): void {
+      state.tasks = tasks;
+    },
 
+    // NOTIFICATIONS
     [NOTIFY](state, newNotification: INotification): void {
       newNotification.id = new Date().getTime();
       state.notifications.push(newNotification);
@@ -86,6 +93,13 @@ export const store = createStore<State>({
     async [DELETE_PROJECT_ACTION]({ commit }, projectId) {
       await clientHttp.delete(`/projects/${projectId}`);
       return commit(DELETE_PROJECT, projectId);
+    },
+
+    //ACOES DAS TAREFAS:
+    [GET_TASKS_ACTION]({ commit }) {
+      clientHttp
+        .get("tasks")
+        .then((response) => commit(SET_TASKS, response.data));
     },
   },
 });
