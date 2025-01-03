@@ -11,19 +11,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 
 import AppForms from "@/components/AppForms.vue";
 import CustomTask from "@/components/CustomTask.vue";
 import ITask from "@/interfaces/ITask";
 import AppBox from "@/components/AppBox.vue";
+import { customUseStore } from "@/store";
 
 export default defineComponent({
   name: "TasksView",
   components: { AppForms, CustomTask, AppBox },
-  data() {
+  setup() {
+    const store = customUseStore();
+
     return {
-      tasks: [] as ITask[],
+      store,
+      tasks: computed(() => store.state.tasks),
     };
   },
   methods: {
