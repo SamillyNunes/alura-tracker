@@ -6,15 +6,18 @@ import {
   ADD_TASK,
   DELETE_PROJECT,
   NOTIFY,
+  SET_PROJECTS,
   UPDATE_PROJECT,
 } from "./mutations_type";
 import ITask from "@/interfaces/ITask";
 import { INotification } from "@/interfaces/INotification";
+import { GET_PROJECTS } from "./actions_types";
+import clientHttp from "@/services/http";
 
 interface State {
   projects: IProject[];
   tasks: ITask[];
-  notifications: INotification[],
+  notifications: INotification[];
 }
 
 export const storeKey: InjectionKey<Store<State>> = Symbol();
@@ -42,17 +45,29 @@ export const store = createStore<State>({
     [DELETE_PROJECT](state, id: string): void {
       state.projects = state.projects.filter((p) => p.id !== id);
     },
+    [SET_PROJECTS](state, projects: IProject[]): void {
+      state.projects = projects;
+    },
+
     [ADD_TASK](state, task: ITask) {
       state.tasks.push(task);
     },
-    [NOTIFY](state, newNotification: INotification): void{
+
+    [NOTIFY](state, newNotification: INotification): void {
       newNotification.id = new Date().getTime();
       state.notifications.push(newNotification);
 
       setTimeout(() => {
-        state.notifications = state.notifications.filter(n => n.id !== newNotification.id);
+        state.notifications = state.notifications.filter(
+          (n) => n.id !== newNotification.id
+        );
       }, 3000);
-    }
+    },
+  },
+  actions: {
+    [GET_PROJECTS]({ commit }) {
+      clientHttp.get("projects").then((response) => commit(SET_PROJECTS,response.data));
+    },
   },
 });
 
