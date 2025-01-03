@@ -9,7 +9,7 @@
       <span>Novo projeto</span>
     </router-link>
 
-    <table class="table is-fullwidth">
+    <table v-if="projects.length" class="table is-fullwidth">
       <thead>
         <tr>
           <th>ID</th>
