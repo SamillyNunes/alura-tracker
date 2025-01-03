@@ -26,6 +26,7 @@ export default defineComponent({
   setup() {
     const store = customUseStore();
     store.dispatch(GET_TASKS_ACTION);
+    store.dispatch(GET_PROJECTS_ACTION);
 
     return {
       store,
