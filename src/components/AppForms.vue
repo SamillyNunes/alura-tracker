@@ -18,19 +18,22 @@
         <div class="select">
           <select v-model="projectId">
             <option value="">Selecione o projeto</option>
-            <option 
+            <option
               v-for="project in projects"
               :value="project.id"
               :key="project.id"
             >
               {{ project.name }}
             </option>
-
           </select>
         </div>
       </div>
 
-      <CustomTimer @on-stop-timer="endTask" />
+      <CustomTimer
+        :can-start-timer="projectId !== ''"
+        @on-timer-cant-start="onProjectIdIsEmpty"
+        @on-stop-timer="endTask"
+      />
     </div>
   </div>
 </template>
@@ -40,6 +43,8 @@ import { computed, defineComponent } from "vue";
 import CustomTimer from "./CustomTimer.vue";
 import { useStore } from "vuex";
 import { storeKey } from "@/store";
+import { NOTIFY } from "@/store/mutations_type";
+import { INotification, NotificationType } from "@/interfaces/INotification";
 
 export default defineComponent({
   name: "AppForms",
@@ -48,30 +53,39 @@ export default defineComponent({
   data() {
     return {
       description: "",
-      projectId: '',
+      projectId: "",
     };
   },
   methods: {
+    onProjectIdIsEmpty(): void {
+      this.store.commit(NOTIFY, {
+        title: "Erro",
+        text: "Você não atribuiu um projeto a sua tarefa. Por favor atribua um projeto antes de iniciar a tarefa",
+        type: NotificationType.FAIL,
+      } as INotification);
+    },
     endTask(elapsedTime: number): void {
       this.$emit("onSaveTask", {
         id: new Date().toISOString(),
         durationInSeconds: elapsedTime,
         description: this.description,
-        project: this.projects.find(p=> p.id===this.projectId),
+        project: this.projects.find((p) => p.id === this.projectId),
       });
 
       this.description = "";
+      this.projectId="";
     },
   },
-  setup(){
+  setup() {
     const store = useStore(storeKey);
     // tudo que retornamos no setup fica disponivel para o componente
     return {
       // retornamos dentro do computed porque a lista eh dinamica,
       // e pode receber alteracoes, logo ele ficara ouvindo
       projects: computed(() => store.state.projects),
-    }
-  }
+      store,
+    };
+  },
 });
 </script>
 

@@ -27,8 +27,15 @@ import AppButton from "./AppButton.vue";
 
 export default defineComponent({
   name: "CustomTimer",
-  emits: ["onStopTimer"],
+  emits: ["onStopTimer", "onTimerCantStart"],
   components: { TimerDisplay, AppButton },
+  props: {
+    canStartTimer: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+  },
   data() {
     return {
       timeInSeconds: 0,
@@ -38,11 +45,15 @@ export default defineComponent({
   },
   methods: {
     startTimer() {
-      this.timerRunning = true;
+      if (this.canStartTimer) {
+        this.timerRunning = true;
 
-      this.timer = setInterval(() => {
-        this.timeInSeconds += 1;
-      }, 1000);
+        this.timer = setInterval(() => {
+          this.timeInSeconds += 1;
+        }, 1000);
+      } else {
+        this.$emit("onTimerCantStart");
+      }
     },
     stopTimer() {
       this.timerRunning = false;
