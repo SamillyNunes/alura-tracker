@@ -22,8 +22,9 @@
 </template>
 
 <script lang="ts">
+import { INotification, NotificationType } from "@/interfaces/INotification";
 import { customUseStore } from "@/store";
-import { ADD_PROJECT, UPDATE_PROJECT } from "@/store/mutations_type";
+import { ADD_PROJECT, NOTIFY, UPDATE_PROJECT } from "@/store/mutations_type";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -61,6 +62,12 @@ export default defineComponent({
       }
 
       this.projectName = "";
+
+      this.store.commit(NOTIFY, {
+        title: 'Novo projeto foi salvo',
+        text: 'Prontinho =D seu projeto está disponível',
+        type: NotificationType.SUCCESS,
+      } as INotification);
 
       this.$router.push("/projects");
     },

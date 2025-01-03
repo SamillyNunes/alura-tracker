@@ -5,6 +5,7 @@ import {
   ADD_PROJECT,
   ADD_TASK,
   DELETE_PROJECT,
+  NOTIFY,
   UPDATE_PROJECT,
 } from "./mutations_type";
 import ITask from "@/interfaces/ITask";
@@ -22,26 +23,7 @@ export const store = createStore<State>({
   state: {
     projects: [],
     tasks: [],
-    notifications: [
-      {
-        id: 1,
-        title: 'Uma notificação de sucesso',
-        text: 'Você conseguiu, parabéns!',
-        type: NotificationType.SUCCESS,
-      },
-      {
-        id: 2,
-        title: 'Uma notificação de atenção',
-        text: 'Cuidado',
-        type: NotificationType.WARNING,
-      },
-      {
-        id: 3,
-        title: 'Uma notificação de perigo',
-        text: 'Você falhou',
-        type: NotificationType.FAIL,
-      }
-    ],
+    notifications: [],
   },
   // o convencional eh que o nome da mutacao seja em caixa alta
   mutations: {
@@ -63,6 +45,14 @@ export const store = createStore<State>({
     [ADD_TASK](state, task: ITask) {
       state.tasks.push(task);
     },
+    [NOTIFY](state, newNotification: INotification): void{
+      newNotification.id = new Date().getTime();
+      state.notifications.push(newNotification);
+
+      setTimeout(() => {
+        state.notifications = state.notifications.filter(n => n.id !== newNotification.id);
+      }, 3000);
+    }
   },
 });
 
