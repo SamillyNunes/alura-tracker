@@ -22,11 +22,11 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from "vue";
 import { NotificationType } from "@/interfaces/INotification";
-import { notifyMixin } from "@/mixins/notify";
 import { customUseStore } from "@/store";
 import { ADD_PROJECT, UPDATE_PROJECT } from "@/store/mutations_type";
-import { defineComponent } from "vue";
+import useNotifier from "@/hooks/notifier";
 
 export default defineComponent({
   name: "ProjectForms",
@@ -50,7 +50,6 @@ export default defineComponent({
       projectName: "",
     };
   },
-  mixins: [notifyMixin],
   methods: {
     save(): void {
       if (this.id) {
@@ -76,9 +75,11 @@ export default defineComponent({
   },
   setup() {
     const store = customUseStore();
+    const { notify } = useNotifier();
 
     return {
       store,
+      notify,
     };
   },
 });
