@@ -3,8 +3,18 @@ import { Module } from "vuex";
 import IProject from "@/interfaces/IProject";
 import clientHttp from "@/services/http";
 import { State } from "@/store";
-import { GET_PROJECTS_ACTION, SEND_PROJECT_ACTION, UPDATE_PROJECT_ACTION, DELETE_PROJECT_ACTION } from "@/store/actions_types";
-import { ADD_PROJECT, DELETE_PROJECT, SET_PROJECTS, UPDATE_PROJECT } from "@/store/mutations_type";
+import {
+  GET_PROJECTS_ACTION,
+  SEND_PROJECT_ACTION,
+  UPDATE_PROJECT_ACTION,
+  DELETE_PROJECT_ACTION,
+} from "@/store/actions_types";
+import {
+  ADD_PROJECT,
+  DELETE_PROJECT,
+  SET_PROJECTS,
+  UPDATE_PROJECT,
+} from "@/store/mutations_type";
 
 export interface ProjectState {
   projects: IProject[];

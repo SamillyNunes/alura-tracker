@@ -9,7 +9,7 @@
       @on-task-clicked="selectTask"
     />
 
-    <AppBox v-if="tasks.length === 0">
+    <AppBox v-if="tasksListIsEmpty">
       Você não está muito produtivo hoje :(
     </AppBox>
 
@@ -80,13 +80,22 @@ export default defineComponent({
 
     return {
       store,
-      tasks: computed(() => store.state.tasks),
+      tasks: computed(() => store.state.task.tasks),
     };
   },
   data() {
     return {
       selectedTask: null as ITask | null,
     };
+  },
+  computed: {
+    tasksListIsEmpty(): boolean {
+      if (this.tasks != undefined) {
+        return this.tasks.length === 0;
+      }
+
+      return true;
+    },
   },
   methods: {
     saveTask(task: ITask): void {
