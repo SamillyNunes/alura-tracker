@@ -1,64 +1,34 @@
-import IProject from "@/interfaces/IProject";
 import { InjectionKey } from "vue";
 import { createStore, Store, useStore } from "vuex";
-import {
-  ADD_PROJECT,
-  ADD_TASK,
-  CHANGE_TASK,
-  DELETE_PROJECT,
-  NOTIFY,
-  SET_PROJECTS,
-  SET_TASKS,
-  UPDATE_PROJECT,
-} from "./mutations_type";
+import { ADD_TASK, CHANGE_TASK, NOTIFY, SET_TASKS } from "./mutations_type";
 import ITask from "@/interfaces/ITask";
 import { INotification } from "@/interfaces/INotification";
 import {
-  DELETE_PROJECT_ACTION,
-  GET_PROJECTS_ACTION,
   GET_TASKS_ACTION,
-  SEND_PROJECT_ACTION,
   SEND_TASK_ACTION,
-  UPDATE_PROJECT_ACTION,
   UPDATE_TASK_ACTION,
 } from "./actions_types";
 import clientHttp from "@/services/http";
+import { project, ProjectState } from "./modules/project";
 
-interface State {
-  projects: IProject[];
+export interface State {
   tasks: ITask[];
   notifications: INotification[];
+  project: ProjectState;
 }
 
 export const storeKey: InjectionKey<Store<State>> = Symbol();
 
 export const store = createStore<State>({
   state: {
-    projects: [],
     tasks: [],
     notifications: [],
+    project: {
+      projects: [], // iniciando de forma global
+    },
   },
   // o convencional eh que o nome da mutacao seja em caixa alta
   mutations: {
-    [ADD_PROJECT](state, projectName: string) {
-      const project = {
-        id: new Date().toISOString(),
-        name: projectName,
-      } as IProject;
-
-      state.projects.push(project);
-    },
-    [UPDATE_PROJECT](state, project: IProject): void {
-      const projectIndex = state.projects.findIndex((p) => p.id === project.id);
-      state.projects[projectIndex] = project;
-    },
-    [DELETE_PROJECT](state, id: string): void {
-      state.projects = state.projects.filter((p) => p.id !== id);
-    },
-    [SET_PROJECTS](state, projects: IProject[]): void {
-      state.projects = projects;
-    },
-
     // TASKS
     [ADD_TASK](state, task: ITask) {
       state.tasks.push(task);
@@ -84,24 +54,6 @@ export const store = createStore<State>({
     },
   },
   actions: {
-    [GET_PROJECTS_ACTION]({ commit }) {
-      clientHttp
-        .get("projects")
-        .then((response) => commit(SET_PROJECTS, response.data));
-    },
-    [SEND_PROJECT_ACTION](context, projectName: string) {
-      return clientHttp.post("/projects", {
-        name: projectName,
-      });
-    },
-    [UPDATE_PROJECT_ACTION](context, project: IProject) {
-      return clientHttp.put(`/projects/${project.id}`, project);
-    },
-    async [DELETE_PROJECT_ACTION]({ commit }, projectId) {
-      await clientHttp.delete(`/projects/${projectId}`);
-      return commit(DELETE_PROJECT, projectId);
-    },
-
     //ACOES DAS TAREFAS:
     [GET_TASKS_ACTION]({ commit }) {
       clientHttp
@@ -113,10 +65,12 @@ export const store = createStore<State>({
       return commit(ADD_TASK, response.data);
     },
     async [UPDATE_TASK_ACTION]({ commit }, task: ITask) {
-      await clientHttp
-        .put(`/tasks/${task.id}`, task);
+      await clientHttp.put(`/tasks/${task.id}`, task);
       return commit(CHANGE_TASK, task);
     },
+  },
+  modules: {
+    project,
   },
 });
 

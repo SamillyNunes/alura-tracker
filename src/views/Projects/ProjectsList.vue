@@ -55,7 +55,7 @@ export default defineComponent({
     store.dispatch(GET_PROJECTS_ACTION);
 
     return {
-      projects: computed(() => store.state.projects),
+      projects: computed(() => store.state.project.projects),
       store,
     };
   },

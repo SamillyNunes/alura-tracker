@@ -43,7 +43,7 @@ export default defineComponent({
     // se existir essa prop id, entao...
     if (this.id) {
       // aqui podemos acessar a this.store porque ela foi exportada la no setup()
-      const project = this.store.state.projects.find((p) => p.id === this.id);
+      const project = this.store.state.project.projects.find((p) => p.id === this.id);
 
       this.projectName = project?.name || "";
     }

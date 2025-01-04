@@ -82,7 +82,7 @@ export default defineComponent({
     return {
       // retornamos dentro do computed porque a lista eh dinamica,
       // e pode receber alteracoes, logo ele ficara ouvindo
-      projects: computed(() => store.state.projects),
+      projects: computed(() => store.state.project.projects),
     };
   },
 });
