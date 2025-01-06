@@ -70,7 +70,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, ref, watchEffect } from "vue";
 
 import AppForms from "@/components/AppForms.vue";
 import CustomTask from "@/components/CustomTask.vue";
@@ -97,11 +97,13 @@ export default defineComponent({
     // vai sempre observar tambem o filtro, que esta ligado a seguinte condicao:
     // se o filtro nao tem um value, ou seja, esta vazio, retorne a tarefa normalmente
     // mas se tiver um valor, entao retorne SE a descricao da tarefa incluir esse valor em algum lugar
-    const tasks = computed(() =>
-      store.state.task.tasks.filter(
-        (t) => !filter.value || t.description.includes(filter.value)
-      )
-    );
+    const tasks = computed(() => store.state.task.tasks);
+
+    // o watch effect observa a dependencia e reflete quando esta ultima muda
+    watchEffect(() => {
+      console.log(filter.value);
+      store.dispatch(GET_TASKS_ACTION, filter.value);
+    });
 
     return {
       store,
