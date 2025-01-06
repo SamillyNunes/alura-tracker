@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted, ref,  } from "vue";
 import { NotificationType } from "@/interfaces/INotification";
 import { customUseStore } from "@/store";
 import useNotifier from "@/hooks/notifier";
@@ -37,21 +37,6 @@ export default defineComponent({
     id: {
       type: String,
     },
-  },
-  // quando esse componente for montado...
-  mounted() {
-    // se existir essa prop id, entao...
-    if (this.id) {
-      // aqui podemos acessar a this.store porque ela foi exportada la no setup()
-      const project = this.store.state.project.projects.find((p) => p.id === this.id);
-
-      this.projectName = project?.name || "";
-    }
-  },
-  data() {
-    return {
-      projectName: "",
-    };
   },
   methods: {
     save(): void {
@@ -81,13 +66,31 @@ export default defineComponent({
       this.$router.push("/projects");
     },
   },
-  setup() {
+  setup(props) {
     const store = customUseStore();
     const { notify } = useNotifier();
+
+    // esse ref() eh a criacao de uma variavel reativa
+    const projectName = ref("");
+
+    
+    onMounted(()=>{
+      // Quando o componente for montado, se existir essa prop id, entao...
+      if (props.id ) {
+        // aqui podemos acessar a this.store porque ela foi exportada la no setup()
+        const project = store.state.project.projects.find(
+          (p) => p.id === props.id
+        );
+  
+        projectName.value = project?.name || "";
+      }
+      
+    });
 
     return {
       store,
       notify,
+      projectName,
     };
   },
 });

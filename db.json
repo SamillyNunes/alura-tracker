@@ -2,7 +2,7 @@
   "projects": [
     {
       "id": "1",
-      "name": "Alura Tracker"
+      "name": "Alura Tracker 2"
     },
     {
       "id": "5159",
@@ -11,6 +11,10 @@
     {
       "id": "fffd",
       "name": "Vuex3"
+    },
+    {
+      "id": "b25f",
+      "name": "Vuex"
     }
   ],
   "tasks": [
