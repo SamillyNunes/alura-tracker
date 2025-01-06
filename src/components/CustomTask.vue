@@ -25,25 +25,27 @@ import AppBox from "./AppBox.vue";
 export default defineComponent({
   name: "CustomTask",
   components: { TimerDisplay, AppBox },
-  emits: ['onTaskClicked'],
+  emits: ["onTaskClicked"],
   props: {
     task: {
       type: Object as PropType<ITask>,
       required: true,
     },
   },
-  methods: {
-    onTaskClicked(): void{
-      this.$emit('onTaskClicked', this.task);
+  setup(props, { emit }) {
+    const onTaskClicked = () => {
+      emit("onTaskClicked", props.task);
+    };
+
+    return {
+      onTaskClicked,
     }
-  }
+  },
 });
 </script>
 
 <style lang="css" scoped>
-
-.task{
+.task {
   cursor: pointer;
 }
-
 </style>
