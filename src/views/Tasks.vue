@@ -2,6 +2,20 @@
   <AppForms @on-save-task="saveTask" />
 
   <div class="lista">
+    <div class="field">
+      <p class="control has-icons-left">
+        <input
+          class="input"
+          type="text"
+          placeholder="Digite para filtrar"
+          v-model="filter"
+        />
+        <span class="icon is-small is-left">
+          <i class="fas fa-magnifying-glass"></i>
+        </span>
+      </p>
+    </div>
+
     <CustomTask
       v-for="task in tasks"
       :key="task.description"
@@ -56,7 +70,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 
 import AppForms from "@/components/AppForms.vue";
 import CustomTask from "@/components/CustomTask.vue";
@@ -78,9 +92,21 @@ export default defineComponent({
     store.dispatch(GET_TASKS_ACTION);
     store.dispatch(GET_PROJECTS_ACTION);
 
+    const filter = ref("");
+
+    // vai sempre observar tambem o filtro, que esta ligado a seguinte condicao:
+    // se o filtro nao tem um value, ou seja, esta vazio, retorne a tarefa normalmente
+    // mas se tiver um valor, entao retorne SE a descricao da tarefa incluir esse valor em algum lugar
+    const tasks = computed(() =>
+      store.state.task.tasks.filter(
+        (t) => !filter.value || t.description.includes(filter.value)
+      )
+    );
+
     return {
       store,
-      tasks: computed(() => store.state.task.tasks),
+      tasks,
+      filter,
     };
   },
   data() {
