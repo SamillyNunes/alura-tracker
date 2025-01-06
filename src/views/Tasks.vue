@@ -27,45 +27,34 @@
       Você não está muito produtivo hoje :(
     </AppBox>
 
-    <div
-      class="modal"
-      :class="{ 'is-active': selectedTask }"
-      v-if="selectedTask"
-    >
-      <div class="modal-background"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">Editando tarefa</p>
-          <button
-            class="delete"
-            aria-label="close"
-            @click="closeModal"
-          ></button>
-        </header>
-        <section class="modal-card-body">
-          <!-- Content ... -->
-          <div class="field">
-            <label for="taskDescription" class="label">
-              Descrição da tarefa
-            </label>
-            <input
-              type="text"
-              class="input"
-              id="taskDescription"
-              v-model="selectedTask.description"
-            />
-          </div>
-        </section>
-        <footer class="modal-card-foot">
-          <div class="buttons">
-            <button class="button is-success" @click="updateTask">
-              Salvar alterações
-            </button>
-            <button class="button" @click="closeModal">Cancelar</button>
-          </div>
-        </footer>
-      </div>
-    </div>
+    <CustomModal :show="selectedTask!=null">
+      <template v-slot:head>
+        <p class="modal-card-title">Editando tarefa</p>
+        <button class="delete" aria-label="close" @click="closeModal"></button>
+      </template>
+      <template v-slot:body>
+        <!-- Content ... -->
+        <div class="field">
+          <label for="taskDescription" class="label">
+            Descrição da tarefa
+          </label>
+          <input
+            type="text"
+            class="input"
+            id="taskDescription"
+            v-model="selectedTask!.description"
+          />
+        </div>
+      </template>
+      <template v-slot:foot>
+        <div class="buttons">
+          <button class="button is-success" @click="updateTask">
+            Salvar alterações
+          </button>
+          <button class="button" @click="closeModal">Cancelar</button>
+        </div>
+      </template>
+    </CustomModal>
   </div>
 </template>
 
@@ -83,10 +72,11 @@ import {
   SEND_TASK_ACTION,
   UPDATE_TASK_ACTION,
 } from "@/store/actions_types";
+import CustomModal from "@/components/CustomModal.vue";
 
 export default defineComponent({
   name: "TasksView",
-  components: { AppForms, CustomTask, AppBox },
+  components: { AppForms, CustomTask, AppBox, CustomModal },
   setup() {
     const store = customUseStore();
     store.dispatch(GET_TASKS_ACTION);
