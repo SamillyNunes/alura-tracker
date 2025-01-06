@@ -9,7 +9,7 @@
       <span>Novo projeto</span>
     </router-link>
 
-    <table v-if="projects.length" class="table is-fullwidth">
+    <table v-if="!projectsListIsEmpty" class="table is-fullwidth">
       <thead>
         <tr>
           <th>ID</th>
@@ -58,6 +58,15 @@ export default defineComponent({
       projects: computed(() => store.state.project.projects),
       store,
     };
+  },
+  computed: {
+    projectsListIsEmpty(): boolean{
+      if(this.projects!=undefined){
+        return this.projects.length===0;
+      }
+
+      return true;
+    }
   },
   methods: {
     deleteProject(id: string): void {
