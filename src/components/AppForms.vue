@@ -39,50 +39,57 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import CustomTimer from "./CustomTimer.vue";
 import { useStore } from "vuex";
 import { storeKey } from "@/store";
 import { NotificationType } from "@/interfaces/INotification";
 import { notifyMixin } from "@/mixins/notify";
+import useNotifier from "@/hooks/notifier";
 
 export default defineComponent({
   name: "AppForms",
   components: { CustomTimer },
   emits: ["onSaveTask"],
-  data() {
-    return {
-      description: "",
-      projectId: "",
-    };
-  },
   mixins: [notifyMixin],
-  methods: {
-    notifyProjectIdIsEmpty(): void {
-      this.notify(
+  setup(props, {emit}) {
+    const store = useStore(storeKey);
+    const { notify } = useNotifier();
+
+    const description = ref("");
+    const projectId = ref("");
+
+    const projects = computed(() => store.state.project.projects);
+
+    const notifyProjectIdIsEmpty = () => {
+      notify(
         NotificationType.FAIL,
         "Erro",
         "Você não atribuiu um projeto a sua tarefa. Por favor atribua um projeto antes de iniciar a tarefa"
       );
-    },
-    endTask(elapsedTime: number): void {
-      this.$emit("onSaveTask", {
+    };
+
+    const endTask = (elapsedTime: number) => {
+      emit("onSaveTask", {
         durationInSeconds: elapsedTime,
-        description: this.description,
-        project: this.projects.find((p) => p.id === this.projectId),
+        description: description.value,
+        project: projects.value.find((p) => p.id === projectId.value),
       });
 
-      this.description = "";
-      this.projectId = "";
-    },
-  },
-  setup() {
-    const store = useStore(storeKey);
+      description.value = "";
+      projectId.value = "";
+    };
+
+
     // tudo que retornamos no setup fica disponivel para o componente
     return {
       // retornamos dentro do computed porque a lista eh dinamica,
       // e pode receber alteracoes, logo ele ficara ouvindo
-      projects: computed(() => store.state.project.projects),
+      projects,
+      description,
+      projectId,
+      notifyProjectIdIsEmpty,
+      endTask,
     };
   },
 });
